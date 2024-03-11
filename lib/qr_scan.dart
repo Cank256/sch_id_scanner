@@ -61,26 +61,34 @@ class _MyAppState extends State<MyAppState> {
 
     String? extractedId = _extractId(_scanQR);
     if (extractedId != null) {
-      _processScannedId(extractedId);
+      _processScannedId(extractedId, _scanQR);
     } else {
       showIdScanFormatError(context);
     }
   }
 
   String? _extractId(String qrData) {
+    // Check if qrData contains the 'ID No. ' string
     if (qrData.contains('ID No. ')) {
+      // If it does, split the string by 'ID No. ', then split by '\n', trim, and return the first element
       return qrData.split('ID No. ')[1].split('\n')[0].trim();
     }
+    // Check if qrData is a URL containing 'https://qrfy.com/profile/'
+    else if (qrData.contains('http')) {
+      // If it does, split the string by '/', and return the last element
+      return qrData.split('/').last;
+    }
+    // If none of the conditions are met, return null
     return null;
   }
 
-  void _processScannedId(String id) {
+  void _processScannedId(String id, String url) {
     final String key = 'ID-$id';
     final int scanCount = _prefs.getInt(key) ?? 0;
 
-    if (scanCount < 2) {
+    if (scanCount < 1) {
       _prefs.setInt(key, scanCount + 1);
-      showIdScanSuccess(context);
+      showIdScanSuccess(context, url);
     } else {
       showIdScanLimitError(context, id);
     }
