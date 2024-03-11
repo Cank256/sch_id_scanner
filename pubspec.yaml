@@ -39,10 +39,17 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_barcode_scanner: ^2.0.0
   flutter_smart_dialog: ^4.9.6
+  flutter_launcher_icons: ^0.13.1
   http: ^1.2.1
   intl: ^0.19.0
   shared_preferences: ^2.0.0
   webview_flutter: ^3.0.4
+
+flutter_launcher_icons:
+  image_path: "assets/images/Gombe.png"
+  # image_path_android: "assets/images/Gombe.webp"
+  android: true # can specify file name here e.g. "ic_launcher"
+  min_sdk_android: 21
 
 dev_dependencies:
   flutter_test:
